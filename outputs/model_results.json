@@ -1,0 +1,61 @@
+{
+  "rule": "logistic regression, trained on years before the test years, scored on the test years",
+  "threshold": 0.7,
+  "test_first_year": 2020,
+  "train_rows": 779,
+  "train_base_rate_under_70": 0.202824,
+  "test_rows": 706,
+  "test_base_rate_under_70": 0.307365,
+  "features": [
+    "prior_ratio",
+    "prior_years",
+    "plan_size",
+    "publisher_prior_share",
+    "publisher_prior_rows",
+    "sector_151",
+    "sector_311",
+    "sector_122",
+    "sector_140",
+    "sector_121",
+    "sector_410",
+    "sector_160",
+    "sector_130"
+  ],
+  "decision_cutoff": 0.5,
+  "model": {
+    "pr_auc": 0.702334,
+    "at_cutoff": {
+      "flagged": 134,
+      "precision": 0.753731,
+      "recall": 0.465438
+    },
+    "same_number_of_flags_as_baseline": {
+      "flagged": 192,
+      "precision": 0.651042,
+      "recall": 0.576037
+    }
+  },
+  "baseline": {
+    "pr_auc": 0.657778,
+    "flags": {
+      "flagged": 192,
+      "precision": 0.666667,
+      "recall": 0.589862
+    }
+  },
+  "coefficients_standardised": {
+    "prior_ratio": -0.215491,
+    "prior_years": 0.29378,
+    "plan_size": 0.042294,
+    "publisher_prior_share": 1.206871,
+    "publisher_prior_rows": -0.099347,
+    "sector_151": -0.034537,
+    "sector_311": 0.001646,
+    "sector_122": 0.132517,
+    "sector_140": -0.103921,
+    "sector_121": 0.022481,
+    "sector_410": -0.231578,
+    "sector_160": -0.187421,
+    "sector_130": 0.144608
+  }
+}

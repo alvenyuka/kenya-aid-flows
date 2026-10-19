@@ -1,0 +1,34 @@
+name: monthly refresh
+
+# Not active until this folder is pushed to GitHub. Runs on the 3rd of each month
+# (and by hand from the Actions tab), downloads fresh data, rebuilds every table,
+# runs the SQL checks and the tests.
+on:
+  schedule:
+    - cron: "0 5 3 * *"
+  workflow_dispatch:
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install requirements
+        run: pip install -r requirements.txt
+
+      - name: Run every stage (download, clean, warehouse, SQL, checks, baseline, results)
+        run: python run_all.py --refresh
+
+      - name: Run the tests
+        run: python -m pytest -q
+
+      - name: Keep the results file
+        uses: actions/upload-artifact@v4
+        with:
+          name: results
+          path: outputs/*.json

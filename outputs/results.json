@@ -1,0 +1,1314 @@
+{
+  "snapshot_date": "2026-10-19",
+  "fetch": {
+    "fetch_date": "2026-10-19",
+    "source": "https://d-portal.org/q.json",
+    "tables": {
+      "act": {
+        "rows_fetched": 26438,
+        "rows_expected_by_api_count": 26438,
+        "pages": 6,
+        "file": "act_2026-10-19.csv"
+      },
+      "trans": {
+        "rows_fetched": 469065,
+        "rows_expected_by_api_count": 469065,
+        "pages": 94,
+        "file": "trans_2026-10-19.csv"
+      },
+      "budget": {
+        "rows_fetched": 113136,
+        "rows_expected_by_api_count": 113136,
+        "pages": 23,
+        "file": "budget_2026-10-19.csv"
+      }
+    }
+  },
+  "checks_run": 10,
+  "cleaning_rules": [
+    {
+      "table": "activities",
+      "rule": "drop_duplicate_activities",
+      "rows_in": 26438,
+      "rows_out": 26429,
+      "rows_removed": 9,
+      "usd_removed": 0.0,
+      "note": ""
+    },
+    {
+      "table": "activities",
+      "rule": "blank_bad_dates",
+      "rows_in": 26429,
+      "rows_out": 26429,
+      "rows_removed": 0,
+      "usd_removed": 0.0,
+      "note": "2750 start/end days outside 2000-01-01..2026-12-31 set to empty (rows kept)"
+    },
+    {
+      "table": "activities",
+      "rule": "fill_missing_reporting_org",
+      "rows_in": 26429,
+      "rows_out": 26429,
+      "rows_removed": 0,
+      "usd_removed": 0.0,
+      "note": "6 rows labelled UNKNOWN (kept)"
+    },
+    {
+      "table": "transactions",
+      "rule": "drop_incoming_funds",
+      "rows_in": 469065,
+      "rows_out": 366976,
+      "rows_removed": 102089,
+      "usd_removed": 11153227828.42,
+      "note": "IF and 11: the receiver's copy of money the donor already reported"
+    },
+    {
+      "table": "transactions",
+      "rule": "drop_non_oda_flows",
+      "rows_in": 366976,
+      "rows_out": 361113,
+      "rows_removed": 5863,
+      "usd_removed": 14452683686.52,
+      "note": "removed disbursements by flow type (flow 20: D USD 2,473m; flow 21: D USD 22m; flow 30: D USD 50m; flow 35: D USD 3,842m; flow 50: D USD 12m); of which IFC (XM-DAC-903): 129 D rows, USD 3,842m"
+    },
+    {
+      "table": "transactions",
+      "rule": "drop_bad_days",
+      "rows_in": 361113,
+      "rows_out": 360289,
+      "rows_removed": 824,
+      "usd_removed": 2283727664.83,
+      "note": "trans_day missing or outside 2000-01-01..2026-12-31"
+    },
+    {
+      "table": "transactions",
+      "rule": "drop_missing_usd",
+      "rows_in": 360289,
+      "rows_out": 360289,
+      "rows_removed": 0,
+      "usd_removed": 0.0,
+      "note": "no USD value"
+    },
+    {
+      "table": "transactions",
+      "rule": "drop_duplicate_transactions",
+      "rows_in": 360289,
+      "rows_out": 352886,
+      "rows_removed": 7403,
+      "usd_removed": 4095083012.32,
+      "note": "same activity, ref, date, code, amount and sector"
+    },
+    {
+      "table": "transactions",
+      "rule": "drop_negative_money",
+      "rows_in": 352886,
+      "rows_out": 334071,
+      "rows_removed": 18815,
+      "usd_removed": -3691077667.75,
+      "note": "negative C or D rows (reversals)"
+    },
+    {
+      "table": "transactions",
+      "rule": "drop_orphans",
+      "rows_in": 334071,
+      "rows_out": 334070,
+      "rows_removed": 1,
+      "usd_removed": 180.0,
+      "note": "aid not in the cleaned activities table"
+    },
+    {
+      "table": "transactions",
+      "rule": "label_missing_sector",
+      "rows_in": 334070,
+      "rows_out": 334070,
+      "rows_removed": 0,
+      "usd_removed": 0.0,
+      "note": "7811 rows relabelled Unknown (kept)"
+    },
+    {
+      "table": "budgets",
+      "rule": "name_budget_types",
+      "rows_in": 113136,
+      "rows_out": 113136,
+      "rows_removed": 0,
+      "usd_removed": 0.0,
+      "note": "26750 lines without a type treated as original, USD 6,456m (kept)"
+    },
+    {
+      "table": "budgets",
+      "rule": "drop_planned_disbursements",
+      "rows_in": 113136,
+      "rows_out": 88927,
+      "rows_removed": 24209,
+      "usd_removed": 3479014803.21,
+      "note": "rows from IATI planned-disbursement elements, not budgets"
+    },
+    {
+      "table": "budgets",
+      "rule": "drop_bad_days",
+      "rows_in": 88927,
+      "rows_out": 83710,
+      "rows_removed": 5217,
+      "usd_removed": 9566987646.14,
+      "note": "start outside 2000-01-01..2026-12-31, or end missing, before 2000 or before start"
+    },
+    {
+      "table": "budgets",
+      "rule": "drop_missing_usd",
+      "rows_in": 83710,
+      "rows_out": 83710,
+      "rows_removed": 0,
+      "usd_removed": 0.0,
+      "note": "no USD value"
+    },
+    {
+      "table": "budgets",
+      "rule": "drop_duplicate_budgets",
+      "rows_in": 83710,
+      "rows_out": 80957,
+      "rows_removed": 2753,
+      "usd_removed": 23238610534.4,
+      "note": "same activity, type, period, amount and sector"
+    },
+    {
+      "table": "budgets",
+      "rule": "drop_negative_budgets",
+      "rows_in": 80957,
+      "rows_out": 79571,
+      "rows_removed": 1386,
+      "usd_removed": -293990272.43,
+      "note": "a planned amount below zero"
+    },
+    {
+      "table": "budgets",
+      "rule": "drop_orphans",
+      "rows_in": 79571,
+      "rows_out": 79571,
+      "rows_removed": 0,
+      "usd_removed": 0.0,
+      "note": "aid not in the cleaned activities table"
+    },
+    {
+      "table": "budgets",
+      "rule": "label_missing_sector",
+      "rows_in": 79571,
+      "rows_out": 79571,
+      "rows_removed": 0,
+      "usd_removed": 0.0,
+      "note": "2110 rows relabelled Unknown (kept)"
+    }
+  ],
+  "rows_kept": {
+    "activities": 26429,
+    "transactions": 334070,
+    "budgets": 79571,
+    "disbursement_rows": 134019,
+    "commitment_rows": 51849,
+    "original_budget_lines": 58000
+  },
+  "budget_lines": {
+    "original_lines": 58000,
+    "original_usd": 34855039088.84,
+    "lines_without_type_treated_as_original": 9004.0,
+    "usd_without_type_treated_as_original": 4417414406.78,
+    "annual_lines": 54366.0,
+    "multi_year_lines": 3634.0
+  },
+  "year_window": {
+    "first_year": 2010,
+    "last_year": 2024
+  },
+  "activity_years_by_coverage": [
+    {
+      "coverage_class": "full_annual",
+      "activity_years": 7791
+    },
+    {
+      "coverage_class": "multi_year_split",
+      "activity_years": 5020
+    },
+    {
+      "coverage_class": "no_plan",
+      "activity_years": 25460
+    },
+    {
+      "coverage_class": "part_year",
+      "activity_years": 7961
+    }
+  ],
+  "activity_years": {
+    "all_activity_years": 46232,
+    "comparable_before_publisher_rule": 4019,
+    "comparable": 2901,
+    "no_plan": 25460,
+    "full_year_plan_but_no_disbursement": 3408
+  },
+  "headline": {
+    "activity_years": 2901,
+    "activities": 1416,
+    "planned_usd": 4631433820.78,
+    "disbursed_usd": 4450694415.36,
+    "arrived_usd": 3402461218.3,
+    "arrived_share": 0.734645,
+    "arrived_share_overshoot_penalised": 0.59906,
+    "ratio": 0.960975,
+    "median_ratio": 0.948498,
+    "share_shortfall": 0.587728,
+    "share_overshoot": 0.345743,
+    "share_on_plan": 0.066529,
+    "share_under_70": 0.288866
+  },
+  "by_year": [
+    {
+      "year": 2010,
+      "comparable_activity_years": 90,
+      "planned_usd": 145069993.7,
+      "disbursed_usd": 137057292.72,
+      "arrived_usd": 98989674.41,
+      "arrived_share": 0.682358,
+      "ratio": 0.944767,
+      "median_ratio": 1.05454,
+      "gap_usd": -8012700.97,
+      "share_shortfall": 0.344444,
+      "share_overshoot": 0.611111,
+      "share_on_plan": 0.044444,
+      "share_under_70": 0.155556,
+      "all_disbursed_usd": 694941822.44,
+      "all_planned_usd": 366037420.63
+    },
+    {
+      "year": 2011,
+      "comparable_activity_years": 107,
+      "planned_usd": 197093105.29,
+      "disbursed_usd": 211797943.62,
+      "arrived_usd": 145308422.56,
+      "arrived_share": 0.737258,
+      "ratio": 1.074609,
+      "median_ratio": 1.163783,
+      "gap_usd": 14704838.34,
+      "share_shortfall": 0.233645,
+      "share_overshoot": 0.747664,
+      "share_on_plan": 0.018692,
+      "share_under_70": 0.11215,
+      "all_disbursed_usd": 841127292.94,
+      "all_planned_usd": 641552298.62
+    },
+    {
+      "year": 2012,
+      "comparable_activity_years": 169,
+      "planned_usd": 255941387.49,
+      "disbursed_usd": 291189514.66,
+      "arrived_usd": 198553247.74,
+      "arrived_share": 0.775776,
+      "ratio": 1.13772,
+      "median_ratio": 1.028728,
+      "gap_usd": 35248127.17,
+      "share_shortfall": 0.301775,
+      "share_overshoot": 0.662722,
+      "share_on_plan": 0.035503,
+      "share_under_70": 0.130178,
+      "all_disbursed_usd": 1702485522.32,
+      "all_planned_usd": 928271211.76
+    },
+    {
+      "year": 2013,
+      "comparable_activity_years": 157,
+      "planned_usd": 255237971.26,
+      "disbursed_usd": 260794807.39,
+      "arrived_usd": 195424068.9,
+      "arrived_share": 0.765654,
+      "ratio": 1.021771,
+      "median_ratio": 1.088585,
+      "gap_usd": 5556836.12,
+      "share_shortfall": 0.33121,
+      "share_overshoot": 0.528662,
+      "share_on_plan": 0.140127,
+      "share_under_70": 0.22293,
+      "all_disbursed_usd": 2442666248.89,
+      "all_planned_usd": 952088922.67
+    },
+    {
+      "year": 2014,
+      "comparable_activity_years": 141,
+      "planned_usd": 244220216.93,
+      "disbursed_usd": 208039961.65,
+      "arrived_usd": 160265315.83,
+      "arrived_share": 0.656233,
+      "ratio": 0.851854,
+      "median_ratio": 1.0,
+      "gap_usd": -36180255.28,
+      "share_shortfall": 0.375887,
+      "share_overshoot": 0.48227,
+      "share_on_plan": 0.141844,
+      "share_under_70": 0.255319,
+      "all_disbursed_usd": 2420107581.2,
+      "all_planned_usd": 1341771570.06
+    },
+    {
+      "year": 2015,
+      "comparable_activity_years": 151,
+      "planned_usd": 237819163.91,
+      "disbursed_usd": 232600006.49,
+      "arrived_usd": 184325450.76,
+      "arrived_share": 0.775066,
+      "ratio": 0.978054,
+      "median_ratio": 0.925626,
+      "gap_usd": -5219157.42,
+      "share_shortfall": 0.728477,
+      "share_overshoot": 0.139073,
+      "share_on_plan": 0.13245,
+      "share_under_70": 0.271523,
+      "all_disbursed_usd": 2191616340.65,
+      "all_planned_usd": 1046570644.04
+    },
+    {
+      "year": 2016,
+      "comparable_activity_years": 181,
+      "planned_usd": 219281480.98,
+      "disbursed_usd": 203042807.53,
+      "arrived_usd": 149351880.98,
+      "arrived_share": 0.681097,
+      "ratio": 0.925946,
+      "median_ratio": 0.919728,
+      "gap_usd": -16238673.44,
+      "share_shortfall": 0.729282,
+      "share_overshoot": 0.198895,
+      "share_on_plan": 0.071823,
+      "share_under_70": 0.348066,
+      "all_disbursed_usd": 2670717702.11,
+      "all_planned_usd": 1169232235.78
+    },
+    {
+      "year": 2017,
+      "comparable_activity_years": 189,
+      "planned_usd": 248673588.81,
+      "disbursed_usd": 254780305.01,
+      "arrived_usd": 184106264.0,
+      "arrived_share": 0.740353,
+      "ratio": 1.024557,
+      "median_ratio": 0.954122,
+      "gap_usd": 6106716.2,
+      "share_shortfall": 0.582011,
+      "share_overshoot": 0.338624,
+      "share_on_plan": 0.079365,
+      "share_under_70": 0.296296,
+      "all_disbursed_usd": 2732556159.18,
+      "all_planned_usd": 1194176203.49
+    },
+    {
+      "year": 2018,
+      "comparable_activity_years": 225,
+      "planned_usd": 303790075.13,
+      "disbursed_usd": 346887304.53,
+      "arrived_usd": 214214189.02,
+      "arrived_share": 0.705139,
+      "ratio": 1.141865,
+      "median_ratio": 0.964736,
+      "gap_usd": 43097229.4,
+      "share_shortfall": 0.555556,
+      "share_overshoot": 0.36,
+      "share_on_plan": 0.084444,
+      "share_under_70": 0.328889,
+      "all_disbursed_usd": 2839755994.48,
+      "all_planned_usd": 2053519628.18
+    },
+    {
+      "year": 2019,
+      "comparable_activity_years": 228,
+      "planned_usd": 321875528.73,
+      "disbursed_usd": 319918902.62,
+      "arrived_usd": 258411728.62,
+      "arrived_share": 0.802831,
+      "ratio": 0.993921,
+      "median_ratio": 0.954495,
+      "gap_usd": -1956626.11,
+      "share_shortfall": 0.622807,
+      "share_overshoot": 0.320175,
+      "share_on_plan": 0.057018,
+      "share_under_70": 0.342105,
+      "all_disbursed_usd": 4033852116.28,
+      "all_planned_usd": 2745279808.3
+    },
+    {
+      "year": 2020,
+      "comparable_activity_years": 240,
+      "planned_usd": 362897717.2,
+      "disbursed_usd": 326782817.61,
+      "arrived_usd": 273843189.13,
+      "arrived_share": 0.754602,
+      "ratio": 0.900482,
+      "median_ratio": 0.92774,
+      "gap_usd": -36114899.59,
+      "share_shortfall": 0.575,
+      "share_overshoot": 0.370833,
+      "share_on_plan": 0.054167,
+      "share_under_70": 0.35,
+      "all_disbursed_usd": 4622111005.64,
+      "all_planned_usd": 2747182359.59
+    },
+    {
+      "year": 2021,
+      "comparable_activity_years": 270,
+      "planned_usd": 412359109.29,
+      "disbursed_usd": 330654369.39,
+      "arrived_usd": 300503898.32,
+      "arrived_share": 0.728743,
+      "ratio": 0.80186,
+      "median_ratio": 0.905517,
+      "gap_usd": -81704739.9,
+      "share_shortfall": 0.67037,
+      "share_overshoot": 0.240741,
+      "share_on_plan": 0.088889,
+      "share_under_70": 0.411111,
+      "all_disbursed_usd": 3399522439.68,
+      "all_planned_usd": 3063899751.0
+    },
+    {
+      "year": 2022,
+      "comparable_activity_years": 200,
+      "planned_usd": 416875778.96,
+      "disbursed_usd": 376454952.55,
+      "arrived_usd": 284625295.1,
+      "arrived_share": 0.682758,
+      "ratio": 0.903039,
+      "median_ratio": 0.878225,
+      "gap_usd": -40420826.41,
+      "share_shortfall": 0.78,
+      "share_overshoot": 0.21,
+      "share_on_plan": 0.01,
+      "share_under_70": 0.325,
+      "all_disbursed_usd": 3521767035.77,
+      "all_planned_usd": 2431036153.74
+    },
+    {
+      "year": 2023,
+      "comparable_activity_years": 275,
+      "planned_usd": 419500646.17,
+      "disbursed_usd": 405687941.2,
+      "arrived_usd": 298891691.56,
+      "arrived_share": 0.712494,
+      "ratio": 0.967073,
+      "median_ratio": 0.928317,
+      "gap_usd": -13812704.98,
+      "share_shortfall": 0.701818,
+      "share_overshoot": 0.261818,
+      "share_on_plan": 0.036364,
+      "share_under_70": 0.290909,
+      "all_disbursed_usd": 3438891218.69,
+      "all_planned_usd": 2753979953.11
+    },
+    {
+      "year": 2024,
+      "comparable_activity_years": 278,
+      "planned_usd": 590798056.93,
+      "disbursed_usd": 545005488.37,
+      "arrived_usd": 455646901.36,
+      "arrived_share": 0.77124,
+      "ratio": 0.92249,
+      "median_ratio": 0.933865,
+      "gap_usd": -45792568.56,
+      "share_shortfall": 0.741007,
+      "share_overshoot": 0.223022,
+      "share_on_plan": 0.035971,
+      "share_under_70": 0.241007,
+      "all_disbursed_usd": 3674539881.47,
+      "all_planned_usd": 2273443930.9
+    }
+  ],
+  "sensitivity_needs_based_publisher_included": {
+    "activity_years": 2909,
+    "planned_usd": 5983057500.02,
+    "disbursed_usd": 4718107471.62,
+    "arrived_share": 0.613378,
+    "ratio": 0.788578,
+    "median_ratio": 0.947401,
+    "share_under_70": 0.290822
+  },
+  "needs_based_publisher_rows": [
+    {
+      "reporting_ref": "XM-DAC-41121",
+      "donor_name": "United Nations High Commissioner for Refugees (UNHCR)",
+      "activity_years": 8,
+      "activities": 8,
+      "planned_usd": 1351623679.24,
+      "disbursed_usd": 267413056.26,
+      "arrived_share": 0.197846
+    }
+  ],
+  "by_year_with_needs_based_publisher": [
+    {
+      "year": 2010,
+      "activity_years": 90,
+      "planned_usd": 145069993.7,
+      "disbursed_usd": 137057292.72,
+      "arrived_share": 0.682358
+    },
+    {
+      "year": 2011,
+      "activity_years": 107,
+      "planned_usd": 197093105.29,
+      "disbursed_usd": 211797943.62,
+      "arrived_share": 0.737258
+    },
+    {
+      "year": 2012,
+      "activity_years": 169,
+      "planned_usd": 255941387.49,
+      "disbursed_usd": 291189514.66,
+      "arrived_share": 0.775776
+    },
+    {
+      "year": 2013,
+      "activity_years": 157,
+      "planned_usd": 255237971.26,
+      "disbursed_usd": 260794807.39,
+      "arrived_share": 0.765654
+    },
+    {
+      "year": 2014,
+      "activity_years": 141,
+      "planned_usd": 244220216.93,
+      "disbursed_usd": 208039961.65,
+      "arrived_share": 0.656233
+    },
+    {
+      "year": 2015,
+      "activity_years": 151,
+      "planned_usd": 237819163.91,
+      "disbursed_usd": 232600006.49,
+      "arrived_share": 0.775066
+    },
+    {
+      "year": 2016,
+      "activity_years": 182,
+      "planned_usd": 488456444.48,
+      "disbursed_usd": 261789901.53,
+      "arrived_share": 0.426034
+    },
+    {
+      "year": 2017,
+      "activity_years": 191,
+      "planned_usd": 485979308.25,
+      "disbursed_usd": 312522432.52,
+      "arrived_share": 0.497652
+    },
+    {
+      "year": 2018,
+      "activity_years": 226,
+      "planned_usd": 494903443.93,
+      "disbursed_usd": 387287659.87,
+      "arrived_share": 0.514473
+    },
+    {
+      "year": 2019,
+      "activity_years": 229,
+      "planned_usd": 491846592.23,
+      "disbursed_usd": 356886283.19,
+      "arrived_share": 0.600551
+    },
+    {
+      "year": 2020,
+      "activity_years": 241,
+      "planned_usd": 527545308.2,
+      "disbursed_usd": 359172747.79,
+      "arrived_share": 0.580487
+    },
+    {
+      "year": 2021,
+      "activity_years": 270,
+      "planned_usd": 412359109.29,
+      "disbursed_usd": 330654369.39,
+      "arrived_share": 0.728743
+    },
+    {
+      "year": 2022,
+      "activity_years": 200,
+      "planned_usd": 416875778.96,
+      "disbursed_usd": 376454952.55,
+      "arrived_share": 0.682758
+    },
+    {
+      "year": 2023,
+      "activity_years": 276,
+      "planned_usd": 572936550.17,
+      "disbursed_usd": 425004102.07,
+      "arrived_share": 0.555398
+    },
+    {
+      "year": 2024,
+      "activity_years": 279,
+      "planned_usd": 756773125.93,
+      "disbursed_usd": 566855496.17,
+      "arrived_share": 0.630964
+    }
+  ],
+  "emergency_response_sector": {
+    "arrived_share_without_needs_based": 0.763625,
+    "arrived_share_with_needs_based": 0.243369,
+    "activity_years_without_needs_based": 73
+  },
+  "sensitivity_expenditure_counted": {
+    "activity_years": 2901,
+    "arrived_share": 0.760264,
+    "ratio": 0.998079
+  },
+  "sensitivity_typed_lines_only": {
+    "activity_years": 2000,
+    "planned_usd": 4011774515.36,
+    "disbursed_usd": 3934213436.83,
+    "arrived_share": 0.727919,
+    "ratio": 0.980667,
+    "median_ratio": 0.934513,
+    "share_under_70": 0.333
+  },
+  "sensitivity_coverage": [
+    {
+      "coverage_class": "full_annual",
+      "activity_years": 2901,
+      "planned_usd": 4631433820.78,
+      "disbursed_usd": 4450694415.36,
+      "arrived_share": 0.734645,
+      "ratio": 0.960975,
+      "median_ratio": 0.948498,
+      "share_under_70": 0.288866
+    },
+    {
+      "coverage_class": "multi_year_split",
+      "activity_years": 532,
+      "planned_usd": 426187633.47,
+      "disbursed_usd": 1236450243.61,
+      "arrived_share": 0.77127,
+      "ratio": 2.901188,
+      "median_ratio": 1.066698,
+      "share_under_70": 0.31015
+    },
+    {
+      "coverage_class": "part_year",
+      "activity_years": 3527,
+      "planned_usd": 2596184638.89,
+      "disbursed_usd": 2794713220.17,
+      "arrived_share": 0.724307,
+      "ratio": 1.076469,
+      "median_ratio": 0.989651,
+      "share_under_70": 0.23873
+    }
+  ],
+  "sensitivity_zero_disbursed_lower_bound": {
+    "activity_years": 3611,
+    "counted_as_zero": 710.0,
+    "planned_usd": 5413536134.75,
+    "disbursed_usd": 4450694415.36,
+    "arrived_share": 0.62851,
+    "ratio": 0.822142,
+    "share_under_70": 0.42869
+  },
+  "plans_from_activities_with_no_disbursement_rows": {
+    "activity_years": 2687,
+    "activity_years_with_expenditure_rows": 1405.0,
+    "planned_usd": 1522231930.44
+  },
+  "publishers_left_out": [
+    {
+      "reporting_ref": "DAC-1601",
+      "donor_name": "Gates Foundation",
+      "activity_years_with_plan_and_disbursement": 1090,
+      "share_within_1pct": 1.0,
+      "median_ratio": 1.0,
+      "budget_mirrors_actuals": true,
+      "budget_partial": false,
+      "budget_needs_based": false,
+      "budget_mirrors_actuals_pre2020": false,
+      "budget_partial_pre2020": false,
+      "headline_rows_removed": 1090
+    },
+    {
+      "reporting_ref": "XM-DAC-41121",
+      "donor_name": "United Nations High Commissioner for Refugees (UNHCR)",
+      "activity_years_with_plan_and_disbursement": 8,
+      "share_within_1pct": 0.0,
+      "median_ratio": 0.204059,
+      "budget_mirrors_actuals": false,
+      "budget_partial": false,
+      "budget_needs_based": true,
+      "budget_mirrors_actuals_pre2020": false,
+      "budget_partial_pre2020": false,
+      "headline_rows_removed": 8
+    },
+    {
+      "reporting_ref": "XM-DAC-47015",
+      "donor_name": "CGIAR",
+      "activity_years_with_plan_and_disbursement": 1074,
+      "share_within_1pct": 0.094972,
+      "median_ratio": 4.471107,
+      "budget_mirrors_actuals": false,
+      "budget_partial": true,
+      "budget_needs_based": false,
+      "budget_mirrors_actuals_pre2020": false,
+      "budget_partial_pre2020": true,
+      "headline_rows_removed": 20
+    }
+  ],
+  "publisher_rule_thresholds": {
+    "min_activity_years": 100,
+    "mirror_share_within_1pct": 0.95,
+    "partial_median_ratio_above": 3,
+    "needs_based_min_years": 3,
+    "needs_based_every_year_ratio_below": 0.3,
+    "needs_based_min_untyped_plan_share": 0.7,
+    "needs_based_rule": "expenditure (E) exceeds disbursement (D)",
+    "note": "chosen after looking at the data (the needs-based ones after looking at UNHCR), not taken from a standard"
+  },
+  "ranking_rule": {
+    "min_comparable_activity_years": 10,
+    "ranked_by": "arrived_share, lowest first (disbursed capped at plan, per activity-year)"
+  },
+  "lowest_arrived_share_donors": [
+    {
+      "reporting_ref": "SE-ON-802017-3517",
+      "donor_name": "Diakonia",
+      "comparable_activity_years": 11,
+      "planned_usd": 520847.42,
+      "disbursed_usd": 6964.37,
+      "arrived_share": 0.013371,
+      "ratio": 0.013371,
+      "median_ratio": 0.0,
+      "share_under_70": 1.0
+    },
+    {
+      "reporting_ref": "XM-DAC-45001",
+      "donor_name": "International Trade Centre (ITC)",
+      "comparable_activity_years": 30,
+      "planned_usd": 12957318.89,
+      "disbursed_usd": 386885.93,
+      "arrived_share": 0.029858,
+      "ratio": 0.029858,
+      "median_ratio": 0.025616,
+      "share_under_70": 1.0
+    },
+    {
+      "reporting_ref": "NL-KVK-41048542",
+      "donor_name": "Stichting Agriterra",
+      "comparable_activity_years": 52,
+      "planned_usd": 3948657.07,
+      "disbursed_usd": 599114.44,
+      "arrived_share": 0.151726,
+      "ratio": 0.151726,
+      "median_ratio": 0.144559,
+      "share_under_70": 1.0
+    },
+    {
+      "reporting_ref": "XM-DAC-47066",
+      "donor_name": "International Organization for Migration (IOM)",
+      "comparable_activity_years": 10,
+      "planned_usd": 6958417.02,
+      "disbursed_usd": 3591013.14,
+      "arrived_share": 0.382994,
+      "ratio": 0.516068,
+      "median_ratio": 0.679841,
+      "share_under_70": 0.5
+    },
+    {
+      "reporting_ref": "GB-COH-1762840",
+      "donor_name": "HelpAge International",
+      "comparable_activity_years": 28,
+      "planned_usd": 20253987.3,
+      "disbursed_usd": 8813366.94,
+      "arrived_share": 0.435142,
+      "ratio": 0.435142,
+      "median_ratio": 0.407759,
+      "share_under_70": 0.964286
+    },
+    {
+      "reporting_ref": "XI-BRIDGE-6385676864",
+      "donor_name": "Global Environment Facility",
+      "comparable_activity_years": 47,
+      "planned_usd": 32571644.28,
+      "disbursed_usd": 25844707.0,
+      "arrived_share": 0.541082,
+      "ratio": 0.793473,
+      "median_ratio": 0.351566,
+      "share_under_70": 0.659574
+    },
+    {
+      "reporting_ref": "NL-KVK-41198677",
+      "donor_name": "Hivos",
+      "comparable_activity_years": 17,
+      "planned_usd": 38311676.16,
+      "disbursed_usd": 21970861.73,
+      "arrived_share": 0.553968,
+      "ratio": 0.573477,
+      "median_ratio": 0.619274,
+      "share_under_70": 0.764706
+    },
+    {
+      "reporting_ref": "NL-KVK-41149831",
+      "donor_name": "Mensen met een Missie",
+      "comparable_activity_years": 11,
+      "planned_usd": 5683692.15,
+      "disbursed_usd": 3507884.4,
+      "arrived_share": 0.569774,
+      "ratio": 0.617184,
+      "median_ratio": 0.585252,
+      "share_under_70": 0.727273
+    },
+    {
+      "reporting_ref": "FR-3",
+      "donor_name": "AFD",
+      "comparable_activity_years": 38,
+      "planned_usd": 55105628.91,
+      "disbursed_usd": 41345149.15,
+      "arrived_share": 0.598021,
+      "ratio": 0.750289,
+      "median_ratio": 1.039965,
+      "share_under_70": 0.289474
+    },
+    {
+      "reporting_ref": "GB-CHC-222655",
+      "donor_name": "Liverpool School of Tropical Medicine",
+      "comparable_activity_years": 11,
+      "planned_usd": 1782065.94,
+      "disbursed_usd": 1258160.64,
+      "arrived_share": 0.657824,
+      "ratio": 0.706012,
+      "median_ratio": 0.658193,
+      "share_under_70": 0.636364
+    }
+  ],
+  "lowest_arrived_share_sectors": [
+    {
+      "sector_group": "Unknown",
+      "sector_group_name": "Unknown",
+      "comparable_activity_years": 16,
+      "planned_usd": 26860203.75,
+      "disbursed_usd": 3670216.74,
+      "arrived_share": 0.125914,
+      "ratio": 0.136641,
+      "median_ratio": 0.232684,
+      "share_under_70": 0.875
+    },
+    {
+      "sector_group": "998",
+      "sector_group_name": "Unallocated or unspecified",
+      "comparable_activity_years": 14,
+      "planned_usd": 7378769.18,
+      "disbursed_usd": 1487288.41,
+      "arrived_share": 0.177945,
+      "ratio": 0.201563,
+      "median_ratio": 0.030684,
+      "share_under_70": 0.785714
+    },
+    {
+      "sector_group": "232",
+      "sector_group_name": "Energy generation, renewable sources",
+      "comparable_activity_years": 41,
+      "planned_usd": 18613798.15,
+      "disbursed_usd": 6509941.54,
+      "arrived_share": 0.251071,
+      "ratio": 0.349737,
+      "median_ratio": 0.91211,
+      "share_under_70": 0.439024
+    },
+    {
+      "sector_group": "231",
+      "sector_group_name": "Energy policy",
+      "comparable_activity_years": 31,
+      "planned_usd": 461374672.75,
+      "disbursed_usd": 348205261.88,
+      "arrived_share": 0.491601,
+      "ratio": 0.754713,
+      "median_ratio": 0.552669,
+      "share_under_70": 0.516129
+    },
+    {
+      "sector_group": "112",
+      "sector_group_name": "Basic education",
+      "comparable_activity_years": 75,
+      "planned_usd": 74637682.83,
+      "disbursed_usd": 44979412.75,
+      "arrived_share": 0.495188,
+      "ratio": 0.602637,
+      "median_ratio": 1.0,
+      "share_under_70": 0.293333
+    },
+    {
+      "sector_group": "114",
+      "sector_group_name": "Post-secondary education",
+      "comparable_activity_years": 84,
+      "planned_usd": 64550699.7,
+      "disbursed_usd": 50848905.59,
+      "arrived_share": 0.552393,
+      "ratio": 0.787736,
+      "median_ratio": 0.935457,
+      "share_under_70": 0.202381
+    },
+    {
+      "sector_group": "321",
+      "sector_group_name": "Industry",
+      "comparable_activity_years": 41,
+      "planned_usd": 25416551.1,
+      "disbursed_usd": 18602197.97,
+      "arrived_share": 0.589505,
+      "ratio": 0.731893,
+      "median_ratio": 0.888939,
+      "share_under_70": 0.463415
+    },
+    {
+      "sector_group": "121",
+      "sector_group_name": "Health, general",
+      "comparable_activity_years": 147,
+      "planned_usd": 70092559.07,
+      "disbursed_usd": 67908743.99,
+      "arrived_share": 0.679053,
+      "ratio": 0.968844,
+      "median_ratio": 1.0,
+      "share_under_70": 0.278912
+    },
+    {
+      "sector_group": "130",
+      "sector_group_name": "Population and reproductive health",
+      "comparable_activity_years": 101,
+      "planned_usd": 100987084.39,
+      "disbursed_usd": 92900125.81,
+      "arrived_share": 0.682234,
+      "ratio": 0.919921,
+      "median_ratio": 0.883975,
+      "share_under_70": 0.366337
+    },
+    {
+      "sector_group": "160",
+      "sector_group_name": "Other social infrastructure",
+      "comparable_activity_years": 95,
+      "planned_usd": 88811534.71,
+      "disbursed_usd": 68891231.75,
+      "arrived_share": 0.718123,
+      "ratio": 0.775701,
+      "median_ratio": 0.997202,
+      "share_under_70": 0.252632
+    }
+  ],
+  "donors_ranked": 27,
+  "sectors_ranked": 27,
+  "overlapping_budget_money_in_headline_set": {
+    "overlapping_usd": 9617867.38,
+    "planned_usd": 4631433820.78,
+    "share_of_planned": 0.002077
+  },
+  "largest_disbursement_rows": [
+    {
+      "aid": "XM-DAC-701-2-2019003027",
+      "trans_year": 2019,
+      "trans_usd": 413065800.0
+    },
+    {
+      "aid": "XM-DAC-701-2-2016003017",
+      "trans_year": 2016,
+      "trans_usd": 404309660.0
+    },
+    {
+      "aid": "XM-DAC-701-2-2020003007",
+      "trans_year": 2020,
+      "trans_usd": 303888930.0
+    },
+    {
+      "aid": "46002-P-KE-K00-007",
+      "trans_year": 2020,
+      "trans_usd": 210291150.0
+    },
+    {
+      "aid": "44000-P172321",
+      "trans_year": 2020,
+      "trans_usd": 187500000.0
+    }
+  ],
+  "all_disbursed_by_year": [
+    {
+      "year": 2000,
+      "disbursed_usd": 130463872.87
+    },
+    {
+      "year": 2001,
+      "disbursed_usd": 95091221.78
+    },
+    {
+      "year": 2002,
+      "disbursed_usd": 25812645.53
+    },
+    {
+      "year": 2003,
+      "disbursed_usd": 164051611.57
+    },
+    {
+      "year": 2004,
+      "disbursed_usd": 285707114.14
+    },
+    {
+      "year": 2005,
+      "disbursed_usd": 73727188.15
+    },
+    {
+      "year": 2006,
+      "disbursed_usd": 254470051.63
+    },
+    {
+      "year": 2007,
+      "disbursed_usd": 400332851.34
+    },
+    {
+      "year": 2008,
+      "disbursed_usd": 354767584.58
+    },
+    {
+      "year": 2009,
+      "disbursed_usd": 1135451213.86
+    },
+    {
+      "year": 2010,
+      "disbursed_usd": 694941822.44
+    },
+    {
+      "year": 2011,
+      "disbursed_usd": 841127292.94
+    },
+    {
+      "year": 2012,
+      "disbursed_usd": 1702485522.32
+    },
+    {
+      "year": 2013,
+      "disbursed_usd": 2442666248.89
+    },
+    {
+      "year": 2014,
+      "disbursed_usd": 2420107581.2
+    },
+    {
+      "year": 2015,
+      "disbursed_usd": 2191616340.65
+    },
+    {
+      "year": 2016,
+      "disbursed_usd": 2670717702.11
+    },
+    {
+      "year": 2017,
+      "disbursed_usd": 2732556159.18
+    },
+    {
+      "year": 2018,
+      "disbursed_usd": 2839755994.48
+    },
+    {
+      "year": 2019,
+      "disbursed_usd": 4033852116.28
+    },
+    {
+      "year": 2020,
+      "disbursed_usd": 4622111005.64
+    },
+    {
+      "year": 2021,
+      "disbursed_usd": 3399522439.68
+    },
+    {
+      "year": 2022,
+      "disbursed_usd": 3521767035.77
+    },
+    {
+      "year": 2023,
+      "disbursed_usd": 3438891218.69
+    },
+    {
+      "year": 2024,
+      "disbursed_usd": 3674539881.47
+    },
+    {
+      "year": 2025,
+      "disbursed_usd": 2760103370.05
+    },
+    {
+      "year": 2026,
+      "disbursed_usd": 1143181124.17
+    }
+  ],
+  "original_budget_by_year": [
+    {
+      "year": 2010,
+      "planned_usd": 366037420.63
+    },
+    {
+      "year": 2011,
+      "planned_usd": 642858859.82
+    },
+    {
+      "year": 2012,
+      "planned_usd": 929223187.23
+    },
+    {
+      "year": 2013,
+      "planned_usd": 952581856.83
+    },
+    {
+      "year": 2014,
+      "planned_usd": 1342129895.3
+    },
+    {
+      "year": 2015,
+      "planned_usd": 1047200180.36
+    },
+    {
+      "year": 2016,
+      "planned_usd": 1169996673.56
+    },
+    {
+      "year": 2017,
+      "planned_usd": 1196452536.24
+    },
+    {
+      "year": 2018,
+      "planned_usd": 2054233622.42
+    },
+    {
+      "year": 2019,
+      "planned_usd": 2745916165.33
+    },
+    {
+      "year": 2020,
+      "planned_usd": 2747523836.62
+    },
+    {
+      "year": 2021,
+      "planned_usd": 3063904324.14
+    },
+    {
+      "year": 2022,
+      "planned_usd": 2431043269.86
+    },
+    {
+      "year": 2023,
+      "planned_usd": 2753986407.72
+    },
+    {
+      "year": 2024,
+      "planned_usd": 2275012111.03
+    },
+    {
+      "year": 2025,
+      "planned_usd": 5154419539.12
+    },
+    {
+      "year": 2026,
+      "planned_usd": 1957425780.47
+    }
+  ],
+  "next_year_against_last_year": {
+    "last_year": 2024,
+    "next_year": 2025,
+    "usd_last_year": 3674539881.47,
+    "usd_next_year": 2760103370.05,
+    "fall_share": 0.248857
+  },
+  "baseline": {
+    "rule": "flag when earlier years of the same activity disbursed under 70% of plan",
+    "threshold": 0.7,
+    "test_first_year": 2020,
+    "headline": {
+      "activity_years_in_population": 2901,
+      "activity_years_in_test_years": 1263,
+      "dropped_no_earlier_year": 557,
+      "activity_years_scored": 706,
+      "base_rate_under_70": 0.307365,
+      "flagged": 192,
+      "share_flagged": 0.271955,
+      "true_positives": 128,
+      "true_positives_in_years_without_disbursement": 0,
+      "precision": 0.666667,
+      "recall": 0.589862,
+      "flag_everything_precision": 0.307365,
+      "lift_over_flag_everything": 2.168971
+    },
+    "zero_fill": {
+      "activity_years_in_population": 3353,
+      "activity_years_in_test_years": 1533,
+      "dropped_no_earlier_year": 604,
+      "activity_years_scored": 929,
+      "base_rate_under_70": 0.462863,
+      "flagged": 343,
+      "share_flagged": 0.369214,
+      "true_positives": 263,
+      "true_positives_in_years_without_disbursement": 132,
+      "precision": 0.766764,
+      "recall": 0.611628,
+      "flag_everything_precision": 0.462863,
+      "lift_over_flag_everything": 1.656567
+    }
+  },
+  "model": {
+    "rule": "logistic regression, trained on years before the test years, scored on the test years",
+    "threshold": 0.7,
+    "test_first_year": 2020,
+    "train_rows": 779,
+    "train_base_rate_under_70": 0.202824,
+    "test_rows": 706,
+    "test_base_rate_under_70": 0.307365,
+    "features": [
+      "prior_ratio",
+      "prior_years",
+      "plan_size",
+      "publisher_prior_share",
+      "publisher_prior_rows",
+      "sector_151",
+      "sector_311",
+      "sector_122",
+      "sector_140",
+      "sector_121",
+      "sector_410",
+      "sector_160",
+      "sector_130"
+    ],
+    "decision_cutoff": 0.5,
+    "model": {
+      "pr_auc": 0.702334,
+      "at_cutoff": {
+        "flagged": 134,
+        "precision": 0.753731,
+        "recall": 0.465438
+      },
+      "same_number_of_flags_as_baseline": {
+        "flagged": 192,
+        "precision": 0.651042,
+        "recall": 0.576037
+      }
+    },
+    "baseline": {
+      "pr_auc": 0.657778,
+      "flags": {
+        "flagged": 192,
+        "precision": 0.666667,
+        "recall": 0.589862
+      }
+    },
+    "coefficients_standardised": {
+      "prior_ratio": -0.215491,
+      "prior_years": 0.29378,
+      "plan_size": 0.042294,
+      "publisher_prior_share": 1.206871,
+      "publisher_prior_rows": -0.099347,
+      "sector_151": -0.034537,
+      "sector_311": 0.001646,
+      "sector_122": 0.132517,
+      "sector_140": -0.103921,
+      "sector_121": 0.022481,
+      "sector_410": -0.231578,
+      "sector_160": -0.187421,
+      "sector_130": 0.144608
+    }
+  },
+  "first_look_naive_table": {
+    "years": "2010 to 2024",
+    "planned_usd": 42337783866.57,
+    "disbursed_usd": 45354378640.27,
+    "ratio": 1.071251,
+    "lowest_yearly_ratio": 0.204257,
+    "highest_yearly_ratio": 4.931339
+  }
+}

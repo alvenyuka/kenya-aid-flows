@@ -1,0 +1,35 @@
+{
+  "rule": "flag when earlier years of the same activity disbursed under 70% of plan",
+  "threshold": 0.7,
+  "test_first_year": 2020,
+  "headline": {
+    "activity_years_in_population": 2901,
+    "activity_years_in_test_years": 1263,
+    "dropped_no_earlier_year": 557,
+    "activity_years_scored": 706,
+    "base_rate_under_70": 0.307365,
+    "flagged": 192,
+    "share_flagged": 0.271955,
+    "true_positives": 128,
+    "true_positives_in_years_without_disbursement": 0,
+    "precision": 0.666667,
+    "recall": 0.589862,
+    "flag_everything_precision": 0.307365,
+    "lift_over_flag_everything": 2.168971
+  },
+  "zero_fill": {
+    "activity_years_in_population": 3353,
+    "activity_years_in_test_years": 1533,
+    "dropped_no_earlier_year": 604,
+    "activity_years_scored": 929,
+    "base_rate_under_70": 0.462863,
+    "flagged": 343,
+    "share_flagged": 0.369214,
+    "true_positives": 263,
+    "true_positives_in_years_without_disbursement": 132,
+    "precision": 0.766764,
+    "recall": 0.611628,
+    "flag_everything_precision": 0.462863,
+    "lift_over_flag_everything": 1.656567
+  }
+}
