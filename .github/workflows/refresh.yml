@@ -1,6 +1,6 @@
 name: monthly refresh
 
-# Not active until this folder is pushed to GitHub. Runs on the 3rd of each month
+# Runs on the 3rd of each month
 # (and by hand from the Actions tab), downloads fresh data, rebuilds every table,
 # runs the SQL checks and the tests.
 on:
