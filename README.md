@@ -1,6 +1,6 @@
 # Kenya Aid Flows
 
-A data pipeline that downloads Kenya's open aid data, cleans it, and measures how much of the money donors scheduled for a year actually arrived in that year.
+A development-finance pipeline that reads Kenya's open IATI aid data, cleans it, and measures how much of the money donors scheduled for a year actually arrived in that year.
 
 ![Bar chart of planned and disbursed aid to Kenya by year, 2010 to 2024, for activities with a full-year annual budget](figures/planned_vs_disbursed_by_year.png)
 
