@@ -1,6 +1,6 @@
 # Kenya Aid Flows
 
-A development-finance pipeline that reads Kenya's open IATI aid data, cleans it, and measures how much of the money donors scheduled for a year was disbursed in that year.
+A development-finance pipeline that reads Kenya's open IATI aid data, cleans it, and measures how much of the money donors scheduled for a year actually arrived in that year.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![tests](https://github.com/alvenyuka/kenya-aid-flows/actions/workflows/refresh.yml/badge.svg)](https://github.com/alvenyuka/kenya-aid-flows/actions/workflows/refresh.yml)
