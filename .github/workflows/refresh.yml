@@ -1,15 +1,23 @@
 name: monthly refresh
 
-# Runs on the 3rd of each month
-# (and by hand from the Actions tab), downloads fresh data, rebuilds every table,
-# runs the SQL checks and the tests.
+# The `refresh` job runs on the 3rd of each month (and by hand from the Actions
+# tab): downloads fresh data, rebuilds every table, runs the SQL checks and the
+# tests. The `test` job runs the test suite alone on every push/PR, so a bad
+# change is caught before the next scheduled refresh rather than up to a month
+# later -- every test here uses tmp_path/monkeypatch fixtures (test_fetch.py,
+# test_run_checks.py and the rest), none hits the live d-portal API or needs
+# data/raw, so this is safe and fast to run on every push.
 on:
   schedule:
     - cron: "0 5 3 * *"
   workflow_dispatch:
+  push:
+    branches: [master, main]
+  pull_request:
 
 jobs:
   refresh:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -32,3 +40,19 @@ jobs:
         with:
           name: results
           path: outputs/*.json
+
+  test:
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install requirements
+        run: pip install -r requirements.txt
+
+      - name: Run the tests (no live download; tmp_path/monkeypatch fixtures only)
+        run: python -m pytest -q
